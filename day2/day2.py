@@ -24,6 +24,39 @@ def CheckDiceBag(match):
         return False
     return True
 
+def Handle_Red(value):
+    global r
+    if value > r:
+        r = value
+
+def Handle_Green(value):
+    global g
+    if value > g:
+        g = value
+
+def Handle_Blue(value):
+    global b
+    if value > b:
+        b = value
+
+def switch(color, value):
+    switcher = {
+        'red' : Handle_Red,
+        'green' : Handle_Green,
+        'blue' : Handle_Blue
+    }
+
+    func = switcher.get(color,lambda x:"wrong color")
+    return func(value)
+
+def CalculatePower(match):
+    for m in match:
+        if m.group(2) is not None:
+            colorMatch = re.findall(r"\D+",m.group(2))[0]
+            numberOfCubes = int(m.group(0))
+            switch(colorMatch.strip(),numberOfCubes)
+
+
 sum = 0
 
 def CheckSum(match):
@@ -39,10 +72,15 @@ def CheckSum(match):
     if isValid is True:
         sum += id
 
-# CheckSum(testmatch)
+pow = 0
 
 for l in lines:
+    r=0
+    g=0
+    b=0
     match = re.finditer(pattern,l)
-    CheckSum(match)
+    # CheckSum(match)
+    CalculatePower(match)
+    pow+=(r*g*b)
 
-print(sum)
+print(pow)
