@@ -1,13 +1,9 @@
 import re
 from day1 import concat
 
-# Test string with overlapping words
-test_string = "three28jxdmlqfmc619eightwo"
 
-# Regex pattern to match words that represent numbers (allowing overlaps)
 pattern = r'(?=(zero|one|two|three|four|five|six|seven|eight|nine))'
 
-# Function to convert word to digit
 def word_to_digit(match):
     word_to_num = {
         'zero': '0',
@@ -23,7 +19,6 @@ def word_to_digit(match):
     }
     return word_to_num[match.group(1)]
 
-# Find all matches (including overlapping ones) and replace words with corresponding digits
 file = "input.txt"
 
 with open(file) as f:
